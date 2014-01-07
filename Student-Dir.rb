@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 students = [{name: "Berta", cohort: :Jan},
 			{name: "Paul", cohort: :Jan},
 			{name: "Megan", cohort: :Jan},
@@ -11,6 +13,9 @@ def list(students)
 	end
 end
 
+def order_by(students, field=:name)
+	students_sorted = students.sort{|x,y| x[field] <=> y[field]}
+end
 
 def insert_students(students)
 
@@ -45,7 +50,7 @@ def print_footer(n)
 end
 
 print_header
-list(students)
+list(order_by(students))
 print_footer(students.length)
 
 insert_students(students)
