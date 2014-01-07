@@ -8,7 +8,7 @@ students = [{name: "Berta", cohort: :Jan},
 def list(students)
 	users = students.sort{|x,y| x[:name] <=> y[:name]}
 
-	users.each_with_index do |student, i| print "#{i+1} - #{student[:name]} (#{student[:cohort]} cohort)\n"
+	users.each_with_index do |student, i|   print "#{i+1} - #{student[:name]} (#{student[:cohort]} cohort)\n" if student[:name].start_with?('B')
 	end
 end
 
@@ -22,7 +22,7 @@ def insert_students(students)
 
 	puts "(Leave Name blank to exit)"
 	print "Enter name: "
-	name = gets.chomp()
+	name = gets.chomp.capitalize()
 
 	while !name.empty?
 		print "Enter cohort: "
@@ -54,4 +54,4 @@ print_footer(students.length)
 
 insert_students(students)
 
-list(students)
+list(order_by(students))
