@@ -1,11 +1,16 @@
 students = [{name: "Berta", cohort: :Jan},
 			{name: "Paul", cohort: :Jan},
-			{name: "Megan", cohort: :Jan}]
+			{name: "Megan", cohort: :Jan},
+			{name: "Rolando", cohort: :Jan}]
 
 def list(students)
-	students.each do |student| puts "#{student[:name]} \t #{student[:cohort]}"
+	puts "NAME   \t\t COHORT"
+	users = students.sort{|x,y| x[:name] <=> y[:name]}
+
+	users.each do |student| puts "#{student[:name]} \t\t#{student[:cohort]}"
 	end
 end
+
 
 def insert_students(students)
 
