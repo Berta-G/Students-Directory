@@ -8,8 +8,16 @@ students = [{name: "Berta", cohort: :Jan},
 def list(students)
 	users = students.sort{|x,y| x[:name] <=> y[:name]}
 
-	users.each_with_index do |student, i|   print "#{i+1} - #{student[:name]} (#{student[:cohort]} cohort)\n" if student[:name].start_with?('B')
+#	users.each_with_index do |student, i|   print "#{i+1} - #{student[:name]} (#{student[:cohort]} cohort)\n" if student[:name].length < 12
+#	end
+
+#Change each for challenge 4
+	i=0
+	while i < students.length do
+		puts "#{i+1} - #{students[i][:name]} (#{students[i][:cohort]} cohort)"
+		i+=1
 	end
+
 end
 
 def order_by(students, field=:name)
