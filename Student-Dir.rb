@@ -6,10 +6,9 @@ students = [{name: "Berta", cohort: :Jan},
 			{name: "Rolando", cohort: :Jan}]
 
 def list(students)
-	puts "NAME   \t\t COHORT"
 	users = students.sort{|x,y| x[:name] <=> y[:name]}
 
-	users.each do |student| puts "#{student[:name]} \t\t#{student[:cohort]}"
+	users.each_with_index do |student, i| print "#{i+1} - #{student[:name]} (#{student[:cohort]} cohort)\n"
 	end
 end
 
