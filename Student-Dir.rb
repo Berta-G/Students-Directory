@@ -1,23 +1,27 @@
 #!/usr/bin/env ruby
 
-students = [{name: "Berta", cohort: :Jan},
-			{name: "Paul", cohort: :Jan},
-			{name: "Megan", cohort: :Jan},
-			{name: "Rolando", cohort: :Jan}]
+students = [{name: "Berta", cohort: :Jan, birthdate: "1980-01-01", country: :UK},
+			{name: "Paul", cohort: :Jan, birthdate: "1980-01-01", country: :France},
+			{name: "Megan", cohort: :Jan, birthdate: "1980-01-01", country: :Spain},
+			{name: "Rolando", cohort: :Jan, birthdate: "1980-01-01", country: :UK},
+			{name: "James", cohort: :Nov, birthdate: "1990-10-07", country: :UK}]
 
 def list(students)
-	users = students.sort{|x,y| x[:name] <=> y[:name]}
 
 #	users.each_with_index do |student, i|   print "#{i+1} - #{student[:name]} (#{student[:cohort]} cohort)\n" if student[:name].length < 12
 #	end
 
 #Change each for challenge 4
+	x = 20 # Width of each 'column'
 	i=0
-	while i < students.length do
-		puts "#{i+1} - #{students[i][:name]} (#{students[i][:cohort]} cohort)"
-		i+=1
-	end
+	puts "\n      " + "NAME".ljust(x) + "COHORT".ljust(x) + "DATE OF BIRTH".ljust(x) + "COUNTRY OF BIRTH".ljust(x)
+	puts "="*80  
 
+	while i < students.length do
+		num= i+1
+		puts "#{num.to_s.rjust(3)} - #{students[i][:name].ljust(x)} #{students[i][:cohort].to_s.ljust(x)} #{students[i][:birthdate].ljust(x)} #{students[i][:country].to_s.ljust(x)}"
+	    i+=1
+	end
 end
 
 def order_by(students, field=:name)
@@ -32,11 +36,23 @@ def insert_students(students)
 	print "Enter name: "
 	name = gets.chomp.capitalize()
 
+	default = "Unknown"
+
 	while !name.empty?
 		print "Enter cohort: "
 		cohort = gets.chomp.capitalize()
+		cohort = default if cohort.empty?
 
-		students << {:name => name, :cohort => cohort}
+		print "Enter date of birth: "
+		birthdate = gets.chomp()
+		birthdate = default if birthdate.empty? 
+#a date validation would be good.
+
+		print "Enter Country of birth: "
+		country = gets.chomp.capitalize()
+		country = default if country.empty?
+
+		students << {:name => name, :cohort => cohort.to_sym, :birthdate => birthdate, :country => country.to_sym}
 		
 		print "Enter name: "
 		name = gets.chomp.capitalize()
