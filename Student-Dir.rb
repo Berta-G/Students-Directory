@@ -19,7 +19,7 @@ def list(students)
 
 	while i < students.length do
 		num= i+1
-		puts "#{num.to_s.rjust(3)} - #{students[i][:name].ljust(x)} #{students[i][:cohort].to_s.ljust(x)} #{students[i][:birthdate].ljust(x)} #{students[i][:country].to_s.ljust(x)}"
+		puts "#{num.to_s.rjust(3)} - #{students[i][:name].to_s.ljust(x)} #{students[i][:cohort].to_s.ljust(x)} #{students[i][:birthdate].to_s.ljust(x)} #{students[i][:country].to_s.ljust(x)}"
 	    i+=1
 	end
 end
@@ -32,39 +32,55 @@ def is_name(name)
 	!/[a-zA-Z]{3,10}/.match(name).nil? && /\d+/.match(name).nil? && name.length <= 18
 end
 
-def insert_students(students)
+def is_cohort(cohort)
+	mnths =["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sept", "oct", "nov", "dec"]
+	sub = cohort.slice(0,3).downcase
+	mnths.include?(sub)
+end
 
-	puts "INTSERT NEW STUDENTS:"
+def is_date(date)
 
-	puts "(Leave Name blank to exit)"
+	require 'date'
+	Date.valid_date?(date.slice(6,4).to_i,date.slice(3,2).to_i,date.slice(0,2).to_i)
+
+end
+
+def insert_student(students)
+
 	print "Enter name: "
 	name = gets.chomp.capitalize()
 	while (!is_name(name))
-		puts "Not allowed, Try again."
-		name = gets.chomp.capitalize()
+			puts "Not allowed, Try again."
+			name = gets.chomp.capitalize()
 	end
 
-	default = "Unknown"
-
-	while !name.empty?
-		print "Enter cohort: "
+	print "Enter cohort: "
+	cohort = gets.chomp.capitalize()
+	#cohort = default if cohort.empty?
+	while (!(is_cohort(cohort) || cohort.empty?))
+		puts "again"
 		cohort = gets.chomp.capitalize()
-		cohort = default if cohort.empty?
-
-		print "Enter date of birth: "
-		birthdate = gets.chomp()
-		birthdate = default if birthdate.empty? 
-#a date validation would be good.
-
-		print "Enter Country of birth: "
-		country = gets.chomp.capitalize()
-		country = default if country.empty?
-
-		students << {:name => name, :cohort => cohort.to_sym, :birthdate => birthdate, :country => country.to_sym}
-		
-		print "Enter name: "
-		name = gets.chomp.capitalize()
 	end
+	cohort = cohort.empty? ? nil : cohort.to_sym
+
+	print "Enter date of birth: "
+	birthdate = gets.chomp()
+	
+	while (!(is_date(birthdate) || birthdate.empty?))
+		puts "again"
+		birthdate = gets.chomp.capitalize()
+	end
+
+	birthdate = nil if birthdate.empty? 
+
+
+	print "Enter Country of birth: "
+	country = gets.chomp.capitalize()
+	country = country.empty? ? nil : country.to_sym
+
+	students << {:name => name, :cohort => cohort, :birthdate => birthdate, :country => country}
+		
+	
 end
 
 def print_header
@@ -86,6 +102,6 @@ print_header
 list(order_by(students))
 print_footer(students.length)
 
-insert_students(students)
+insert_student(students)
 
 list(order_by(students))
