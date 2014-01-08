@@ -28,6 +28,10 @@ def order_by(students, field=:name)
 	students_sorted = students.sort{|x,y| x[field] <=> y[field]}
 end
 
+def is_name(name)
+	!/[a-zA-Z]{3,10}/.match(name).nil? && /\d+/.match(name).nil? && name.length <= 18
+end
+
 def insert_students(students)
 
 	puts "INTSERT NEW STUDENTS:"
@@ -35,6 +39,10 @@ def insert_students(students)
 	puts "(Leave Name blank to exit)"
 	print "Enter name: "
 	name = gets.chomp.capitalize()
+	while (!is_name(name))
+		puts "Not allowed, Try again."
+		name = gets.chomp.capitalize()
+	end
 
 	default = "Unknown"
 
@@ -71,6 +79,8 @@ def print_footer(n)
 	puts " " 
 
 end
+puts "Testing"
+puts is_name("David mike")
 
 print_header
 list(order_by(students))
