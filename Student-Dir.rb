@@ -98,9 +98,13 @@ def print_footer(n)
 
 end
 
-print_header
-list(order_by(students, :cohort))
-print_footer(students.length)
+students = []
+
+if !students.empty? 
+	print_header
+	list(order_by(students, :cohort))
+	print_footer(students.length) 
+end
 
 insert_student(students)
 
