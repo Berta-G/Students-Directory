@@ -1,12 +1,14 @@
 #!/usr/bin/env ruby
+require 'date'
 
 students = [{name: "Berta", cohort: :Jan, birthdate: "1980-01-01", country: :UK},
 			{name: "Paul", cohort: :Jan, birthdate: "1980-01-01", country: :France},
 			{name: "Megan", cohort: :Jan, birthdate: "1980-01-01", country: :Spain},
 			{name: "Rolando", cohort: :Jan, birthdate: "1980-01-01", country: :UK},
 			{name: "James", cohort: :Nov, birthdate: "1990-10-07", country: :UK}]
-
+#students = []
 def list(students)
+
 
 #	users.each_with_index do |student, i|   print "#{i+1} - #{student[:name]} (#{student[:cohort]} cohort)\n" if student[:name].length < 12
 #	end
@@ -25,7 +27,7 @@ def list(students)
 end
 
 def order_by(students, field=:name)
-	students_sorted = students.sort{|x,y| x[field] <=> y[field]}
+	students_sorted = students.sort{|x,y| x[field].to_s <=> y[field].to_s}
 end
 
 def is_name(name)
@@ -40,7 +42,7 @@ end
 
 def is_date(date)
 
-	require 'date'
+	
 	Date.valid_date?(date.slice(6,4).to_i,date.slice(3,2).to_i,date.slice(0,2).to_i)
 
 end
@@ -75,7 +77,7 @@ def insert_student(students)
 
 
 	print "Enter Country of birth: "
-	country = gets.chomp.capitalize()
+	country = gets.delete("\n").capitalize()
 	country = country.empty? ? nil : country.to_sym
 
 	students << {:name => name, :cohort => cohort, :birthdate => birthdate, :country => country}
@@ -89,19 +91,19 @@ def print_header
 end
 
 def print_footer(n)
-	
-	puts "Number of students: #{n}"
+	es = (n != 1) ? "s" : ""
+	puts "Now we have #{n} student#{es}"
 	puts "-"*80
 	puts " " 
 
 end
-puts "Testing"
-puts is_name("David mike")
 
 print_header
-list(order_by(students))
+list(order_by(students, :cohort))
 print_footer(students.length)
 
 insert_student(students)
 
-list(order_by(students))
+#puts Date::ABBR_MONTHNAMES
+list(order_by(students, :cohort))
+print_footer(students.length)
